@@ -26,6 +26,7 @@ Create a Pipeline Job in Jenkins:
 
 Go to Jenkins Dashboard > New Item > Pipeline.
 Configure the pipeline to use the Jenkinsfile in your Git repository.
+
 Step 3: Set Up Ansible for Deployment
 Now, create an Ansible playbook (deploy.yml) to automate deployment tasks:
 
@@ -33,3 +34,27 @@ Configure deploy.yml to:
 
 Install Java and Tomcat (if they aren’t already installed).
 Deploy the application WAR file to the Tomcat server.
+
+Step 4: Create the Ansible Inventory File
+Define the server where Tomcat is running in the Ansible inventory file (inventory.ini):
+
+ini
+Copy code
+# inventory.ini
+[tomcat_server]
+192.168.1.100 ansible_user=your_ssh_user
+Step 5: Run the Pipeline in Jenkins
+Execute the Job:
+
+Go to your Jenkins pipeline job and click Build Now to start the pipeline.
+Jenkins will follow the steps defined in the Jenkinsfile to pull, build, and deploy your application.
+Monitor Deployment:
+
+After the pipeline completes, check the application running on the Tomcat server at http://<your-server-ip>:8080/your-app-context.
+
+Summary of the Flow
+Git: Stores the source code and version history.
+Jenkins: Automates the build and deployment pipeline.
+Ansible: Automates configuration and deployment to Tomcat.
+Tomcat: Hosts the application.
+This setup helps you automate the development pipeline, from code updates in Git to deployment on Tomcat, ensuring consistency and efficiency.
