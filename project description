@@ -1,0 +1,7 @@
+To create java app:
+mvn archetype:generate -DgroupId=luffy -DartifactId=AJGTproject -DarchetypeArtifactId=maven-archetype-webapp -DarchetypeVersion=1.4 
+
+Step 1: Set Up Your Git Repository
+Create a simple Java web application (or use an existing one) and push it to a Git repository, such as GitHub.
+
+In this project, we’ll add a Jenkins pipeline configuration file, called Jenkinsfile, to the repository. This file will contain the steps Jenkins should follow to build and deploy the application.
