@@ -1,0 +1,31 @@
+---
+- name: Installing Java1.8.0 maven and git
+  yum:
+    name:
+      - java-1.8.0-openjdk
+      - maven
+      - git
+
+- name: Install Java17
+  yum:
+    name: java-17-amazon-corretto
+    state: present
+
+- name: Downloading jenkins repo
+  command: sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+
+
+- name: Importing the key
+  command: sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+
+- name: Installing Jenkins
+  yum:
+    name: jenkins
+    state: present
+
+- name: Starting Jenkins
+  service:
+    name: jenkins
+    state: started
+
+...
