@@ -1,0 +1,26 @@
+---
+- name: Installing java1.8.0
+  yum:
+    name: java-1.8.0-openjdk
+    state: present
+
+- name: Downloading the tar file
+  command: wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.96/bin/apache-tomcat-9.0.96.tar.gz
+
+- name: Untar the file
+  command: tar -zxvf apache-tomcat-9.0.96.tar.gz
+
+- name: Changing the permissions in context.xml file
+  copy:
+    src: "context.xml"
+    dest: "/root/apache-tomcat-9.0.96/webapps/manager/META-INF/context.xml"
+
+- name: Adding credentials
+  copy:
+    src: "tomcat-users.xml"
+    dest: "/root/apache-tomcat-9.0.96/conf/tomcat-users.xml"
+
+- name: starting the tomcat
+  shell: nohup /root/apache-tomcat-9.0.96/bin/startup.sh
+
+...
