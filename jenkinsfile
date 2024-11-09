@@ -1,44 +1,27 @@
-Sample Jenkinsfile:
 pipeline {
     agent any
-
     environment {
-        REPO_URL = 'https://github.com/yourusername/your-repo.git' // Your Git repository URL
+        ANSIBLE_SERVER = "root@172.31.93.185"  // Replace with the actual Ansible server's IP
+        // No need to set PATH on Jenkins, since Ansible will run on the Ansible server
     }
-
     stages {
-        stage('Checkout') {
+        stage('Code') {
             steps {
-                // Pull the code from Git
-                git url: "${REPO_URL}", branch: 'main'
+                git 'https://github.com/AvinashSaladi/MyDeployment.git'
             }
         }
-
         stage('Build') {
             steps {
-                // Build the application (for Java projects, use Maven)
                 sh 'mvn clean package'
             }
         }
-
-        stage('Deploy to Tomcat using Ansible') {
+        stage('Deploy') {
             steps {
-                // Run the Ansible playbook for deployment
-                ansiblePlaybook(
-                    playbook: 'deploy.yml',
-                    inventory: 'inventory.ini',
-                    credentialsId: 'ansible-ssh-key' // Jenkins SSH credentials ID
-                )
+                sshagent(['Ansible']) {
+                    // SSH to Ansible server and execute the playbook
+                    sh "ssh $ANSIBLE_SERVER 'ansible-playbook /Roles/tomcat/tasks/deploy.yml'"
+                }
             }
-        }
-    }
-
-    post {
-        success {
-            echo 'Deployment successful!'
-        }
-        failure {
-            echo 'Deployment failed.'
         }
     }
 }
