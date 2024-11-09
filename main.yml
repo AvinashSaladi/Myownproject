@@ -1,0 +1,12 @@
+---
+- hosts: dev
+  connection: ssh
+  roles:
+    - jenkins
+
+- hosts: test
+  connection: ssh
+  roles:
+    - tomcat
+
+...
